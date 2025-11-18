@@ -4,26 +4,17 @@ import Link from 'next/link'
 import { Header } from '@/components/header'
 import { MobileNav } from '@/components/mobile-nav'
 import { Button } from '@/components/ui/button'
+import { Currency } from '@/components/ui/currency'
 import { Heart } from 'lucide-react'
 import { useStore } from '@/lib/store-context'
 import { useLanguage } from '@/lib/language-context'
+import { products } from '@/lib/data/products'
 
 export default function FavoritesPage() {
   const { favorites, toggleFavorite, addToCart } = useStore()
   const { t, language } = useLanguage()
 
-  const allProducts = [
-    { id: 1, name: 'Classic Oxford Shirt', nameAr: 'قميص أكسفورد كلاسيكي', price: 89, category: 'Shirts', categoryAr: 'قمصان', image: '/white-oxford-shirt.png' },
-    { id: 2, name: 'Merino Wool Sweater', nameAr: 'سترة صوف ميرينو', price: 149, category: 'Knitwear', categoryAr: 'ملابس صوفية', image: '/mens-sweater-beige.jpg' },
-    { id: 3, name: 'Tailored Chinos', nameAr: 'بنطلون تشينو مفصل', price: 119, category: 'Trousers', categoryAr: 'بناطيل', image: '/beige-chino-pants.png' },
-    { id: 4, name: 'Cotton Polo Shirt', nameAr: 'قميص بولو قطني', price: 69, category: 'Shirts', categoryAr: 'قمصان', image: '/navy-polo-shirt.jpg' },
-    { id: 5, name: 'Wool Overcoat', nameAr: 'معطف صوفي', price: 299, category: 'Outerwear', categoryAr: 'ملابس خارجية', image: '/mens-wool-coat-camel.jpg' },
-    { id: 6, name: 'Linen Blazer', nameAr: 'جاكيت كتان', price: 189, category: 'Outerwear', categoryAr: 'ملابس خارجية', image: '/beige-linen-blazer.jpg' },
-    { id: 7, name: 'Cashmere Cardigan', nameAr: 'كارديجان كشمير', price: 179, category: 'Knitwear', categoryAr: 'ملابس صوفية', image: '/grey-cashmere-cardigan.jpg' },
-    { id: 8, name: 'Dress Trousers', nameAr: 'بنطلون رسمي', price: 129, category: 'Trousers', categoryAr: 'بناطيل', image: '/grey-dress-pants.jpg' },
-  ]
-
-  const favoriteProducts = allProducts.filter(product => favorites.includes(product.id))
+  const favoriteProducts = products.filter(product => favorites.includes(product.id))
 
   return (
     <div className="min-h-screen bg-[#F9F8F6] pb-20">
@@ -71,23 +62,25 @@ export default function FavoritesPage() {
                     <h3 className="font-medium text-[#2A2723] text-sm leading-tight">
                       {language === 'ar' ? product.nameAr : product.name}
                     </h3>
-                    <p className="font-serif text-lg font-semibold text-[#2A2723] inline-flex items-baseline gap-1">
-                      {language === 'ar' ? (
-                        <>
-                          <span>{product.price}</span>
-                          <span>ر.س</span>
-                        </>
-                      ) : (
-                        <>
-                          <span>$</span>
-                          <span>{product.price}</span>
-                        </>
-                      )}
-                    </p>
+                    <Currency
+                      value={product.price}
+                      className="font-serif text-lg font-semibold text-[#2A2723]"
+                    />
                   </div>
                 </Link>
                 <Button 
-                  onClick={() => addToCart(product)}
+                  onClick={() => addToCart({
+                    id: product.id,
+                    name: product.name,
+                    nameAr: product.nameAr,
+                    price: product.price,
+                    image: product.image,
+                    category: product.category,
+                    categoryAr: product.categoryAr,
+                    size: product.sizes[2] || product.sizes[0],
+                    color: product.colors[0],
+                    quantity: 1,
+                  })}
                   className="w-full mt-3 bg-[#C9B59C] hover:bg-[#B8A58B] text-[#2A2723] font-medium rounded-full h-10 transition-all active:scale-95"
                 >
                   {t('addToCart')}

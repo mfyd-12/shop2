@@ -38,6 +38,24 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$ne
 ;
 ;
 const StoreContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$3_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["createContext"])(undefined);
+const buildVariantId = (id, size, color)=>{
+    const colorToken = typeof color === 'string' ? color : color?.value || color && `${color.name}-${color.nameAr}` || 'default';
+    return `${id}-${size || 'any'}-${colorToken}`;
+};
+const normalizeColor = (color)=>{
+    if (!color) return undefined;
+    if (typeof color === 'string') {
+        return {
+            name: color,
+            nameAr: color,
+            value: color
+        };
+    }
+    if (typeof color === 'object' && 'name' in color && 'value' in color) {
+        return color;
+    }
+    return undefined;
+};
 function StoreProvider({ children }) {
     const [cart, setCart] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$3_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
     const [favorites, setFavorites] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$3_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
@@ -45,7 +63,26 @@ function StoreProvider({ children }) {
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$3_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const savedCart = localStorage.getItem('cart');
         const savedFavorites = localStorage.getItem('favorites');
-        if (savedCart) setCart(JSON.parse(savedCart));
+        if (savedCart) {
+            const parsed = JSON.parse(savedCart).map((item)=>{
+                const color = normalizeColor(item.color);
+                const variantId = item.variantId || buildVariantId(item.id, item.size, color);
+                return {
+                    variantId,
+                    id: item.id,
+                    name: item.name,
+                    nameAr: item.nameAr || item.name,
+                    price: item.price,
+                    quantity: item.quantity,
+                    size: item.size || 'M',
+                    color,
+                    image: item.image,
+                    category: item.category,
+                    categoryAr: item.categoryAr || item.category
+                };
+            });
+            setCart(parsed);
+        }
         if (savedFavorites) setFavorites(JSON.parse(savedFavorites));
     }, []);
     // Save to localStorage whenever cart changes
@@ -61,10 +98,13 @@ function StoreProvider({ children }) {
         favorites
     ]);
     const addToCart = (product)=>{
+        const size = product.size || 'M';
+        const color = normalizeColor(product.color);
+        const variantId = buildVariantId(product.id, size, color);
         setCart((currentCart)=>{
-            const existingItem = currentCart.find((item)=>item.id === product.id && item.size === product.size);
+            const existingItem = currentCart.find((item)=>item.variantId === variantId);
             if (existingItem) {
-                return currentCart.map((item)=>item.id === product.id && item.size === product.size ? {
+                return currentCart.map((item)=>item.variantId === variantId ? {
                         ...item,
                         quantity: item.quantity + (product.quantity || 1)
                     } : item);
@@ -73,12 +113,16 @@ function StoreProvider({ children }) {
                     ...currentCart,
                     {
                         id: product.id,
+                        variantId,
                         name: product.name,
+                        nameAr: product.nameAr,
                         price: product.price,
                         quantity: product.quantity || 1,
-                        size: product.size || 'M',
+                        size,
+                        color,
                         image: product.image,
-                        category: product.category
+                        category: product.category,
+                        categoryAr: product.categoryAr
                     }
                 ];
             }
@@ -99,15 +143,16 @@ function StoreProvider({ children }) {
     const isFavorite = (productId)=>{
         return favorites.includes(productId);
     };
-    const removeFromCart = (productId)=>{
-        setCart((currentCart)=>currentCart.filter((item)=>item.id !== productId));
+    const removeFromCart = (variantId)=>{
+        setCart((currentCart)=>currentCart.filter((item)=>item.variantId !== variantId));
     };
-    const updateQuantity = (productId, quantity)=>{
-        setCart((currentCart)=>currentCart.map((item)=>item.id === productId ? {
+    const updateQuantity = (variantId, quantity)=>{
+        setCart((currentCart)=>currentCart.map((item)=>item.variantId === variantId ? {
                     ...item,
-                    quantity
+                    quantity: Math.max(1, quantity)
                 } : item));
     };
+    const clearCart = ()=>setCart([]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$3_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(StoreContext.Provider, {
         value: {
             cart,
@@ -116,12 +161,13 @@ function StoreProvider({ children }) {
             toggleFavorite,
             isFavorite,
             removeFromCart,
-            updateQuantity
+            updateQuantity,
+            clearCart
         },
         children: children
     }, void 0, false, {
         fileName: "[project]/lib/store-context.tsx",
-        lineNumber: 101,
+        lineNumber: 170,
         columnNumber: 5
     }, this);
 }
@@ -190,6 +236,8 @@ const translations = {
         quantity: 'Quantity',
         addToBag: 'Add to Bag',
         productDetails: 'Product Details',
+        selectColor: 'Select Color',
+        color: 'Color',
         share: 'Share',
         shareProduct: 'Share Product',
         shareVia: 'Share via',
@@ -213,6 +261,18 @@ const translations = {
         items: 'items',
         continueShopping: 'Continue Shopping',
         proceedToCheckout: 'Proceed to Checkout',
+        completeOrder: 'Complete Order',
+        checkoutFormTitle: 'Checkout Details',
+        fullName: 'Full Name',
+        phoneNumber: 'Phone Number',
+        address: 'Location / Address',
+        cityLabel: 'City',
+        deliveryNotes: 'Delivery Notes',
+        paymentMethod: 'Payment Method',
+        cashOnDelivery: 'Cash on Delivery',
+        placeOrder: 'Place Order',
+        orderSummary: 'Order Summary',
+        reviewOrder: 'Review your order before confirming',
         yourCartEmpty: 'Your cart is empty',
         startAddingItems: 'Start adding some items to your cart to see them here.',
         // Favorites
@@ -277,6 +337,8 @@ const translations = {
         quantity: 'الكمية',
         addToBag: 'أضف للسلة',
         productDetails: 'تفاصيل المنتج',
+        selectColor: 'اختر اللون',
+        color: 'اللون',
         share: 'مشاركة',
         shareProduct: 'مشاركة المنتج',
         shareVia: 'مشاركة عبر',
@@ -300,6 +362,18 @@ const translations = {
         items: 'منتجات',
         continueShopping: 'متابعة التسوق',
         proceedToCheckout: 'إتمام الطلب',
+        completeOrder: 'إكمال الطلب',
+        checkoutFormTitle: 'بيانات الشحن',
+        fullName: 'الاسم الكامل',
+        phoneNumber: 'رقم الجوال',
+        address: 'الموقع / العنوان',
+        cityLabel: 'المدينة',
+        deliveryNotes: 'ملاحظات التوصيل',
+        paymentMethod: 'طريقة الدفع',
+        cashOnDelivery: 'الدفع عند الاستلام',
+        placeOrder: 'تأكيد الطلب',
+        orderSummary: 'ملخص الطلب',
+        reviewOrder: 'راجع طلبك قبل التأكيد',
         yourCartEmpty: 'سلتك فارغة',
         startAddingItems: 'ابدأ بإضافة المنتجات لسلتك لتظهر هنا.',
         // Favorites
@@ -354,7 +428,7 @@ function LanguageProvider({ children }) {
         children: children
     }, void 0, false, {
         fileName: "[project]/lib/language-context.tsx",
-        lineNumber: 237,
+        lineNumber: 265,
         columnNumber: 5
     }, this);
 }

@@ -4,11 +4,13 @@ import Link from 'next/link'
 import { Header } from '@/components/header'
 import { MobileNav } from '@/components/mobile-nav'
 import { Button } from '@/components/ui/button'
+import { Currency } from '@/components/ui/currency'
 import { ArrowRight } from 'lucide-react'
 import { useLanguage } from '@/lib/language-context'
+import { products } from '@/lib/data/products'
 
 export default function HomePage() {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
   
   const categories = [
     { name: t('outerwear'), image: '/mens-jacket-minimal.jpg' },
@@ -17,11 +19,7 @@ export default function HomePage() {
     { name: t('trousers'), image: '/mens-trousers-minimal.jpg' },
   ]
 
-  const featured = [
-    { id: 1, name: 'Classic Oxford Shirt', price: 89, image: '/white-oxford-shirt.png' },
-    { id: 2, name: 'Merino Wool Sweater', price: 149, image: '/mens-sweater-beige.jpg' },
-    { id: 3, name: 'Tailored Chinos', price: 119, image: '/beige-chino-pants.png' },
-  ]
+  const featured = products.slice(0, 3)
 
   return (
     <div className="min-h-screen bg-[#F9F8F6] pb-20">
@@ -102,19 +100,19 @@ export default function HomePage() {
               <div className="w-32 h-32 flex-shrink-0">
                 <img 
                   src={product.image || "/placeholder.svg"} 
-                  alt={product.name}
+                  alt={language === 'ar' ? product.nameAr : product.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
               <div className="flex flex-col justify-center py-4 pr-4">
                 <h4 className="font-medium text-[#2A2723] mb-1">
-                  {product.name}
+                  {language === 'ar' ? product.nameAr : product.name}
                 </h4>
                 <p className="text-[#6B6561] text-sm mb-2">{t('premiumQuality')}</p>
-                <p className="font-serif text-lg font-semibold text-[#2A2723] flex items-center gap-1">
-                  <span>$</span>
-                  <span>{product.price}</span>
-                </p>
+                <Currency
+                  value={product.price}
+                  className="font-serif text-lg font-semibold text-[#2A2723]"
+                />
               </div>
             </Link>
           ))}

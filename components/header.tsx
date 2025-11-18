@@ -57,15 +57,6 @@ export function Header() {
                 {language === 'ar' ? '🇸🇦' : '🇺🇸'}
               </span>
             </button>
-            
-            <Link href="/cart" className="p-2 relative">
-              <ShoppingBag className="w-6 h-6 text-[#2A2723]" />
-              {totalItems > 0 && (
-                <span className="absolute top-1 right-1 w-4 h-4 bg-[#C9B59C] text-[#2A2723] text-xs font-medium rounded-full flex items-center justify-center">
-                  {totalItems}
-                </span>
-              )}
-            </Link>
           </div>
         </div>
       </header>
