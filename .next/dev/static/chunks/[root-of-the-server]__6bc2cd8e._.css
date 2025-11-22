@@ -631,10 +631,6 @@
     top: calc(var(--spacing) * 0);
   }
 
-  .top-1 {
-    top: calc(var(--spacing) * 1);
-  }
-
   .top-1\.5 {
     top: calc(var(--spacing) * 1.5);
   }
@@ -1128,10 +1124,6 @@
 
   .h-auto {
     height: auto;
-  }
-
-  .h-fit {
-    height: fit-content;
   }
 
   .h-full {

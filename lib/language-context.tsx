@@ -99,6 +99,13 @@ const translations = {
     reviewOrder: 'Review your order before confirming',
     yourCartEmpty: 'Your cart is empty',
     startAddingItems: 'Start adding some items to your cart to see them here.',
+
+    // Orders
+    myOrders: 'My Orders',
+    order: 'Order',
+    orders: 'Orders',
+    noOrdersYet: 'No orders yet',
+    noOrdersDescription: 'You have not placed any orders yet. Your orders will appear here.',
     
     // Favorites
     favorites: 'Favorites',
@@ -115,6 +122,8 @@ const translations = {
     removedFromFavorites: 'Removed from favorites',
     copiedToClipboard: 'Link copied to clipboard',
     shareSuccess: 'Share opened successfully',
+    orderPlaced: 'Order Placed!',
+    orderPlacedDescription: 'Your order has been successfully placed.',
     
     // Navigation
     home: 'Home',
@@ -211,6 +220,13 @@ const translations = {
     yourCartEmpty: 'سلتك فارغة',
     startAddingItems: 'ابدأ بإضافة المنتجات لسلتك لتظهر هنا.',
     
+    // Orders
+    myOrders: 'طلباتي',
+    order: 'طلب',
+    orders: 'الطلبات',
+    noOrdersYet: 'لا توجد طلبات بعد',
+    noOrdersDescription: 'لم تقم بأي طلبات بعد. ستظهر طلباتك هنا.',
+
     // Favorites
     favorites: 'المفضلة',
     myFavorites: 'مفضلتي',
@@ -226,6 +242,8 @@ const translations = {
     removedFromFavorites: 'تم إزالة المنتج من المفضلة',
     copiedToClipboard: 'تم نسخ الرابط',
     shareSuccess: 'تم فتح المشاركة بنجاح',
+    orderPlaced: 'تم الطلب بنجاح!',
+    orderPlacedDescription: 'لقد تم إرسال طلبك بنجاح.',
     
     // Navigation
     home: 'الرئيسية',

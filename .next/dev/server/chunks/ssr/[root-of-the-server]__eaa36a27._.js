@@ -468,8 +468,9 @@ function generateStaticParams() {
             id: product.id.toString()
         }));
 }
-function ProductPage({ params }) {
-    const productId = Number(params.id);
+async function ProductPage({ params }) {
+    const { id } = await params;
+    const productId = Number(id);
     const product = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$data$2f$products$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getProductById"])(productId);
     if (!product) {
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$3_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$client$2f$components$2f$navigation$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["notFound"])();
@@ -478,7 +479,7 @@ function ProductPage({ params }) {
         product: product
     }, void 0, false, {
         fileName: "[project]/app/products/[id]/page.tsx",
-        lineNumber: 20,
+        lineNumber: 21,
         columnNumber: 10
     }, this);
 }

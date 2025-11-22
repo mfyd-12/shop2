@@ -19,6 +19,23 @@ type CartItem = {
   categoryAr: string
 }
 
+type Order = {
+  id: string
+  date: string
+  form: {
+    fullName: string
+    phone: string
+    address: string
+    city: string
+    notes: string
+    paymentMethod: string
+  }
+  items: CartItem[]
+  subtotal: number
+  shipping: number
+  total: number
+}
+
 type AddToCartPayload = {
   id: number
   name: string
@@ -35,12 +52,14 @@ type AddToCartPayload = {
 type StoreContextType = {
   cart: CartItem[]
   favorites: number[]
-  addToCart: (product: AddToCartPayload) => void
+  orders: Order[]
+  addToCart: (product: AddTotoCartPayload) => void
   toggleFavorite: (productId: number) => void
   isFavorite: (productId: number) => boolean
   removeFromCart: (variantId: string) => void
   updateQuantity: (variantId: string, quantity: number) => void
   clearCart: () => void
+  addOrder: (orderData: Omit<Order, 'id' | 'date'>) => void
 }
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined)
@@ -67,11 +86,13 @@ const normalizeColor = (color: any): CartColor => {
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([])
   const [favorites, setFavorites] = useState<number[]>([])
+  const [orders, setOrders] = useState<Order[]>([])
 
   // Load from localStorage on mount
   useEffect(() => {
     const savedCart = localStorage.getItem('cart')
     const savedFavorites = localStorage.getItem('favorites')
+    const savedOrders = localStorage.getItem('orders')
     
     if (savedCart) {
       const parsed: CartItem[] = JSON.parse(savedCart).map((item: any) => {
@@ -94,6 +115,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       setCart(parsed)
     }
     if (savedFavorites) setFavorites(JSON.parse(savedFavorites))
+    if (savedOrders) setOrders(JSON.parse(savedOrders))
   }, [])
 
   // Save to localStorage whenever cart changes
@@ -105,6 +127,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     localStorage.setItem('favorites', JSON.stringify(favorites))
   }, [favorites])
+
+  // Save to localStorage whenever orders change
+  useEffect(() => {
+    localStorage.setItem('orders', JSON.stringify(orders))
+  }, [orders])
 
   const addToCart = (product: AddToCartPayload) => {
     const size = product.size || 'M'
@@ -166,8 +193,18 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const clearCart = () => setCart([])
 
+  const addOrder = (orderData: Omit<Order, 'id' | 'date'>) => {
+    const newOrder: Order = {
+      ...orderData,
+      id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      date: new Date().toISOString(),
+    }
+    setOrders(currentOrders => [newOrder, ...currentOrders])
+    clearCart()
+  }
+
   return (
-    <StoreContext.Provider value={{ cart, favorites, addToCart, toggleFavorite, isFavorite, removeFromCart, updateQuantity, clearCart }}>
+    <StoreContext.Provider value={{ cart, favorites, orders, addToCart, toggleFavorite, isFavorite, removeFromCart, updateQuantity, clearCart, addOrder }}>
       {children}
     </StoreContext.Provider>
   )

@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Home, ShoppingBag, User, Search } from 'lucide-react'
+import { Home, ShoppingBag, User, Search, Package } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { useLanguage } from '@/lib/language-context'
 
@@ -13,6 +13,7 @@ export function MobileNav() {
     { icon: Home, label: 'home', href: '/' },
     { icon: Search, label: 'shop', href: '/products' },
     { icon: ShoppingBag, label: 'shoppingCart', href: '/cart' },
+    { icon: Package, label: 'orders', href: '/orders' },
     { icon: User, label: 'account', href: '/account' },
   ]
   

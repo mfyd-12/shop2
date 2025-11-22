@@ -12,10 +12,12 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Currency } from '@/components/ui/currency'
 import { useLanguage } from '@/lib/language-context'
+import { useToast } from '@/components/ui/use-toast'
 
 export default function CartPage() {
-  const { cart, removeFromCart, updateQuantity } = useStore()
+  const { cart, removeFromCart, updateQuantity, addOrder } = useStore()
   const { t, language } = useLanguage()
+  const { toast } = useToast()
   const [checkoutOpen, setCheckoutOpen] = useState(false)
 
   const orderFormInitial = {
@@ -28,13 +30,6 @@ export default function CartPage() {
   }
 
   const [orderForm, setOrderForm] = useState(orderFormInitial)
-  const [orderSummary, setOrderSummary] = useState<null | {
-    form: typeof orderFormInitial
-    items: typeof cart
-    subtotal: number
-    shipping: number
-    total: number
-  }>(null)
 
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
   const shipping = cart.length > 0 ? 12 : 0
@@ -53,12 +48,18 @@ export default function CartPage() {
 
   const handleCheckoutSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    setOrderSummary({
+    addOrder({
       form: orderForm,
-      items: cart.map(item => ({ ...item })),
+      items: cart,
       subtotal,
       shipping,
       total,
+    })
+    closeCheckout()
+    setOrderForm(orderFormInitial)
+    toast({
+      title: t('orderPlaced'),
+      description: t('orderPlacedDescription'),
     })
   }
 
@@ -310,54 +311,6 @@ export default function CartPage() {
                 {t('placeOrder')}
               </Button>
             </form>
-
-            {orderSummary && (
-              <div className="border border-[#E1DCD4] rounded-2xl p-4 space-y-4">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-serif text-xl font-bold text-[#2A2723]">{t('orderSummary')}</h4>
-                  <Currency
-                    value={orderSummary.total}
-                    className="font-serif text-xl font-semibold text-[#2A2723]"
-                  />
-                </div>
-                <div className="space-y-2 text-sm text-[#2A2723]">
-                  <p>{orderSummary.form.fullName} • {orderSummary.form.phone}</p>
-                  <p>{orderSummary.form.address}, {orderSummary.form.city}</p>
-                  {orderSummary.form.notes && (
-                    <p className="text-[#6B6561]">{orderSummary.form.notes}</p>
-                  )}
-                  <p className="text-[#6B6561]">{t('paymentMethod')}: {t('cashOnDelivery')}</p>
-                </div>
-                <div className="space-y-3">
-                  {orderSummary.items.map((item) => (
-                    <div key={item.variantId} className="flex justify-between text-sm text-[#2A2723]">
-                      <div className="space-y-1">
-                        <p className="font-medium">{language === 'ar' ? item.nameAr : item.name}</p>
-                        <p className="text-[#6B6561]">
-                          {t('size')}: {item.size}
-                          {item.color ? ` • ${language === 'ar' ? item.color.nameAr : item.color.name}` : ''}
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <span className="text-[#6B6561]">× {item.quantity}</span>
-                        <Currency
-                          value={item.price * item.quantity}
-                          className="block font-medium text-[#2A2723]"
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="flex justify-between text-sm text-[#6B6561] border-t border-[#E1DCD4] pt-3">
-                  <span>{t('subtotal')}</span>
-                  <Currency value={orderSummary.subtotal} className="font-medium text-[#2A2723]" />
-                </div>
-                <div className="flex justify-between text-sm text-[#6B6561]">
-                  <span>{t('shipping')}</span>
-                  <Currency value={orderSummary.shipping} className="font-medium text-[#2A2723]" />
-                </div>
-              </div>
-            )}
           </div>
         </div>
       )}

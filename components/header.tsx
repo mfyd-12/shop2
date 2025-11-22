@@ -127,7 +127,14 @@ export function Header() {
               </ul>
             </nav>
 
-            <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-[#D9CFC7]">
+            <div className="absolute bottom-0 left-0 right-0 p-4 space-y-2 border-t border-[#D9CFC7]">
+              <Link
+                href="/orders"
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-4 py-3 rounded-xl text-center bg-white text-[#2A2723] font-medium hover:bg-[#EFE9E3] transition-colors"
+              >
+                {t('myOrders')}
+              </Link>
               <Link
                 href="/account"
                 onClick={() => setIsMenuOpen(false)}
