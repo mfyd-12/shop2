@@ -334,7 +334,14 @@ const translations = {
         home: 'Home',
         shop: 'Shop',
         account: 'Account',
-        all: 'All'
+        all: 'All',
+        // Account
+        settings: 'Settings',
+        profile: 'Profile',
+        addresses: 'Addresses',
+        paymentMethods: 'Payment Methods',
+        activity: 'Activity',
+        support: 'Support'
     },
     ar: {
         // Header
@@ -443,7 +450,14 @@ const translations = {
         home: 'الرئيسية',
         shop: 'المتجر',
         account: 'الحساب',
-        all: 'الكل'
+        all: 'الكل',
+        // Account
+        settings: 'الإعدادات',
+        profile: 'الملف الشخصي',
+        addresses: 'العناوين',
+        paymentMethods: 'طرق الدفع',
+        activity: 'النشاط',
+        support: 'الدعم'
     }
 };
 const LanguageContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createContext"])(undefined);
@@ -482,7 +496,7 @@ function LanguageProvider({ children }) {
         children: children
     }, void 0, false, {
         fileName: "[project]/lib/language-context.tsx",
-        lineNumber: 283,
+        lineNumber: 299,
         columnNumber: 5
     }, this);
 }

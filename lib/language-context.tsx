@@ -130,6 +130,14 @@ const translations = {
     shop: 'Shop',
     account: 'Account',
     all: 'All',
+
+    // Account
+    settings: 'Settings',
+    profile: 'Profile',
+    addresses: 'Addresses',
+    paymentMethods: 'Payment Methods',
+    activity: 'Activity',
+    support: 'Support',
   },
   ar: {
     // Header
@@ -250,6 +258,14 @@ const translations = {
     shop: 'المتجر',
     account: 'الحساب',
     all: 'الكل',
+
+    // Account
+    settings: 'الإعدادات',
+    profile: 'الملف الشخصي',
+    addresses: 'العناوين',
+    paymentMethods: 'طرق الدفع',
+    activity: 'النشاط',
+    support: 'الدعم',
   }
 }
 
