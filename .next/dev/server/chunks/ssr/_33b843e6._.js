@@ -1012,6 +1012,28 @@ const baseProducts = [
         image: '/slim-fit-jeans-dark-blue.jpg',
         description: 'Soft stretch denim with a refined slim profile and clean pocket construction.',
         descriptionAr: 'دينم مرن ناعم بقصة ضيقة مصقولة وجيوب نظيفة التصميم.'
+    },
+    {
+        id: 13,
+        name: 'Cozy Fleece Hoodie',
+        nameAr: 'كنزة صوفية مريحة بغطاء للرأس',
+        price: 75,
+        category: 'Hoodies',
+        categoryAr: 'الكنزات الثقيلة',
+        image: '/black-turtleneck-sweater.png',
+        description: 'Ultra-soft fleece hoodie for ultimate comfort and warmth. Perfect for casual wear.',
+        descriptionAr: 'كنزة صوفية فائقة النعومة لتوفير أقصى درجات الراحة والدفء. مثالية للارتداء اليومي غير الرسمي.'
+    },
+    {
+        id: 14,
+        name: 'Leather Sneakers',
+        nameAr: 'أحذية رياضية جلدية',
+        price: 130,
+        category: 'Shoes',
+        categoryAr: 'الأحذية',
+        image: '/stylish-man-minimal-fashion-portrait.jpg',
+        description: 'Stylish and comfortable leather sneakers for everyday wear. Durable and versatile.',
+        descriptionAr: 'أحذية رياضية جلدية أنيقة ومريحة للارتداء اليومي. متينة ومتعددة الاستخدامات.'
     }
 ];
 const colorPalettes = {
@@ -1158,6 +1180,30 @@ const colorPalettes = {
             nameAr: 'غرافيت',
             value: '#3b3d45'
         }
+    ],
+    13: [
+        {
+            name: 'Black',
+            nameAr: 'أسود',
+            value: '#1c1c1c'
+        },
+        {
+            name: 'Grey',
+            nameAr: 'رمادي',
+            value: '#6B6561'
+        }
+    ],
+    14: [
+        {
+            name: 'White',
+            nameAr: 'أبيض',
+            value: '#f7f7f2'
+        },
+        {
+            name: 'Black',
+            nameAr: 'أسود',
+            value: '#1c1c1c'
+        }
     ]
 };
 const galleryMap = {
@@ -1220,6 +1266,16 @@ const galleryMap = {
         '/slim-fit-jeans-dark-blue.jpg',
         '/cargo-pants-khaki.jpg',
         '/mens-trousers-minimal.jpg'
+    ],
+    13: [
+        '/black-turtleneck-sweater.png',
+        '/black-turtleneck-sweater.png',
+        '/black-turtleneck-sweater.png'
+    ],
+    14: [
+        '/stylish-man-minimal-fashion-portrait.jpg',
+        '/stylish-man-minimal-fashion-portrait.jpg',
+        '/stylish-man-minimal-fashion-portrait.jpg'
     ]
 };
 const products = baseProducts.map((product)=>({
