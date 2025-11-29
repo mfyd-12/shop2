@@ -51,9 +51,10 @@ type AddToCartPayload = {
 
 type StoreContextType = {
   cart: CartItem[]
+  cartCount: number
   favorites: number[]
   orders: Order[]
-  addToCart: (product: AddTotoCartPayload) => void
+  addToCart: (product: AddToCartPayload) => void
   toggleFavorite: (productId: number) => void
   isFavorite: (productId: number) => boolean
   removeFromCart: (variantId: string) => void
@@ -87,6 +88,12 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([])
   const [favorites, setFavorites] = useState<number[]>([])
   const [orders, setOrders] = useState<Order[]>([])
+  const [cartCount, setCartCount] = useState(0)
+
+  useEffect(() => {
+    const count = cart.reduce((total, item) => total + item.quantity, 0)
+    setCartCount(count)
+  }, [cart])
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -204,7 +211,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <StoreContext.Provider value={{ cart, favorites, orders, addToCart, toggleFavorite, isFavorite, removeFromCart, updateQuantity, clearCart, addOrder }}>
+    <StoreContext.Provider value={{ cart, cartCount, favorites, orders, addToCart, toggleFavorite, isFavorite, removeFromCart, updateQuantity, clearCart, addOrder }}>
       {children}
     </StoreContext.Provider>
   )

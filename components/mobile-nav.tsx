@@ -4,10 +4,12 @@ import Link from 'next/link'
 import { Home, ShoppingBag, User, Search, Package } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { useLanguage } from '@/lib/language-context'
+import { useStore } from '@/lib/store-context'
 
 export function MobileNav() {
   const pathname = usePathname()
   const { t } = useLanguage()
+  const { cartCount } = useStore()
   
   const navItems = [
     { icon: Home, label: 'home', href: '/' },
@@ -27,8 +29,13 @@ export function MobileNav() {
             <Link
               key={item.href}
               href={item.href}
-              className="flex flex-col items-center justify-center gap-1 flex-1 transition-all active:scale-95"
+              className="relative flex flex-col items-center justify-center gap-1 flex-1 transition-all active:scale-95"
             >
+              {item.label === 'shoppingCart' && cartCount > 0 && (
+                <div className="absolute -top-1 -right-1.5 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center text-white text-[10px] font-bold">
+                  {cartCount}
+                </div>
+              )}
               <Icon 
                 className={`w-5 h-5 ${isActive ? 'text-[#2A2723]' : 'text-[#6B6561]'}`} 
               />

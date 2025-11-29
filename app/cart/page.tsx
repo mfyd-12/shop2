@@ -19,6 +19,7 @@ export default function CartPage() {
   const { t, language } = useLanguage()
   const { toast } = useToast()
   const [checkoutOpen, setCheckoutOpen] = useState(false)
+  const [showConfirmation, setShowConfirmation] = useState(false)
 
   const orderFormInitial = {
     fullName: '',
@@ -57,10 +58,7 @@ export default function CartPage() {
     })
     closeCheckout()
     setOrderForm(orderFormInitial)
-    toast({
-      title: t('orderPlaced'),
-      description: t('orderPlacedDescription'),
-    })
+    setShowConfirmation(true)
   }
 
   const closeCheckout = () => setCheckoutOpen(false)
@@ -226,6 +224,36 @@ export default function CartPage() {
       )}
 
       <MobileNav />
+
+      {showConfirmation && (
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center px-4">
+          <div className="bg-[#F9F8F6] w-full max-w-md rounded-3xl p-8 text-center shadow-2xl animate-in zoom-in-95 duration-300">
+            <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <span className="text-5xl">🎉</span>
+            </div>
+            <h2 className="font-serif text-2xl font-bold text-[#2A2723] mb-3">
+              {t('orderPlaced')}
+            </h2>
+            <p className="text-[#6B6561] mb-8">
+              Your order has been received successfully.
+            </p>
+            <div className="flex flex-col gap-3">
+              <Link href="/orders">
+                <Button className="w-full bg-[#2A2723] hover:bg-[#3A3733] text-[#F9F8F6] font-medium rounded-full h-12 transition-all active:scale-95">
+                  Go to My Orders
+                </Button>
+              </Link>
+              <Button
+                variant="outline"
+                onClick={() => setShowConfirmation(false)}
+                className="w-full border-[#D9CFC7] text-[#2A2723] font-medium rounded-full h-12 hover:bg-[#EFE9E3] transition-all active:scale-95"
+              >
+                {t('close')}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {checkoutOpen && (
         <div 
