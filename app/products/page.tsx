@@ -11,33 +11,17 @@ import { useMemo, useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
 import { useLanguage } from '@/lib/language-context'
 import { products } from '@/lib/data/products'
+import { CategoryFilter } from '@/components/category-filter'
 
 export default function ProductsPage() {
   const { addToCart, toggleFavorite, isFavorite } = useStore()
-  const [filter, setFilter] = useState('All')
+  const [selectedCategory, setSelectedCategory] = useState('All')
   const { toast } = useToast()
   const { t, language } = useLanguage()
 
-  const categoryFilters = useMemo(() => {
-    const map = new Map<string, string>()
-    products.forEach((product) => {
-      if (!map.has(product.category)) {
-        map.set(product.category, product.categoryAr)
-      }
-    })
-    return [
-      { key: 'All', labelEn: t('all') || 'All', labelAr: 'الكل' },
-      ...Array.from(map.entries()).map(([key, value]) => ({
-        key,
-        labelEn: key,
-        labelAr: value,
-      })),
-    ]
-  }, [t])
-
-  const filteredProducts = filter === 'All'
+  const filteredProducts = selectedCategory === 'All'
     ? products
-    : products.filter(p => p.category === filter)
+    : products.filter(p => p.category === selectedCategory)
 
   const handleAddToCart = (product: typeof products[0]) => {
     const payload = {
@@ -92,21 +76,11 @@ export default function ProductsPage() {
 
       {/* Filters */}
       <section className="px-4 py-4 border-b border-[#D9CFC7]">
-        <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4">
-          {categoryFilters.map((filterName) => (
-            <button
-              key={filterName.key}
-              onClick={() => setFilter(filterName.key)}
-              className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all active:scale-95 ${
-                filter === filterName.key
-                  ? 'bg-[#2A2723] text-[#F9F8F6]' 
-                  : 'bg-[#EFE9E3] text-[#6B6561]'
-              }`}
-            >
-              {language === 'ar' ? filterName.labelAr : filterName.labelEn}
-            </button>
-          ))}
-        </div>
+        <CategoryFilter
+          products={products}
+          onSelectCategory={setSelectedCategory}
+          selectedCategory={selectedCategory}
+        />
       </section>
 
       {/* Products Grid */}
