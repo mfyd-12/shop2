@@ -314,3 +314,11 @@ export function getProductById(id: number) {
   return productsById[id]
 }
 
+export function getProductsByCategory(category: string): Product[] {
+  const lowerCaseCategory = category.toLowerCase();
+  return products.filter(product => 
+    product.category.toLowerCase() === lowerCaseCategory || 
+    product.categoryAr.toLowerCase() === lowerCaseCategory
+  );
+}
+

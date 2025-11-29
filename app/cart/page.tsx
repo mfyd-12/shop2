@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Minus, Plus, Trash2, X } from 'lucide-react'
 
@@ -13,6 +13,18 @@ import { Textarea } from '@/components/ui/textarea'
 import { Currency } from '@/components/ui/currency'
 import { useLanguage } from '@/lib/language-context'
 import { useToast } from '@/components/ui/use-toast'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select' // Assuming Select component exists
+
+interface Address {
+  id: string;
+  fullName: string;
+  streetAddress: string;
+  city: string;
+  postalCode: string;
+  country: string;
+}
+
+const LOCAL_STORAGE_KEY = 'user_addresses';
 
 export default function CartPage() {
   const { cart, removeFromCart, updateQuantity, addOrder } = useStore()
@@ -20,6 +32,9 @@ export default function CartPage() {
   const { toast } = useToast()
   const [checkoutOpen, setCheckoutOpen] = useState(false)
   const [showConfirmation, setShowConfirmation] = useState(false)
+  const [savedAddresses, setSavedAddresses] = useState<Address[]>([]);
+  const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
+
 
   const orderFormInitial = {
     fullName: '',
@@ -36,6 +51,16 @@ export default function CartPage() {
   const shipping = cart.length > 0 ? 12 : 0
   const total = subtotal + shipping
 
+  // Load addresses from localStorage on component mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedAddresses = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (storedAddresses) {
+        setSavedAddresses(JSON.parse(storedAddresses));
+      }
+    }
+  }, []);
+
   const handleQuantityChange = (variantId: string, delta: number) => {
     const item = cart.find(entry => entry.variantId === variantId)
     if (!item) return
@@ -46,6 +71,29 @@ export default function CartPage() {
   const handleInputChange = (field: keyof typeof orderFormInitial, value: string) => {
     setOrderForm(prev => ({ ...prev, [field]: value }))
   }
+
+  const handleAddressSelect = (addressId: string) => {
+    setSelectedAddressId(addressId);
+    if (addressId === 'new') {
+      setOrderForm(prev => ({
+        ...prev,
+        fullName: '',
+        address: '',
+        city: '',
+      }));
+    } else {
+      const address = savedAddresses.find(addr => addr.id === addressId);
+      if (address) {
+        setOrderForm(prev => ({
+          ...prev,
+          fullName: address.fullName,
+          address: address.streetAddress, // Map streetAddress to address
+          city: address.city,
+          // Phone is not stored with address, so it remains as is or cleared if desired
+        }));
+      }
+    }
+  };
 
   const handleCheckoutSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -281,6 +329,25 @@ export default function CartPage() {
             </div>
 
             <form className="space-y-4" onSubmit={handleCheckoutSubmit}>
+              {savedAddresses.length > 0 && (
+                <div className="space-y-1">
+                  <label className="text-sm font-medium text-[#2A2723]">{t('select_saved_address')}</label>
+                  <Select onValueChange={handleAddressSelect} value={selectedAddressId || "new"}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder={t('select_an_address')} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="new">{t('enter_new_address')}</SelectItem>
+                      {savedAddresses.map((addr) => (
+                        <SelectItem key={addr.id} value={addr.id}>
+                          {`${addr.fullName} - ${addr.streetAddress}, ${addr.city}`}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+
               <div className="space-y-1">
                 <label className="text-sm font-medium text-[#2A2723]">{t('fullName')}</label>
                 <Input

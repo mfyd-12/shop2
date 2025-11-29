@@ -938,6 +938,8 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 __turbopack_context__.s([
     "getProductById",
     ()=>getProductById,
+    "getProductsByCategory",
+    ()=>getProductsByCategory,
     "products",
     ()=>products,
     "productsById",
@@ -1386,6 +1388,10 @@ const productsById = products.reduce((acc, product)=>{
 }, {});
 function getProductById(id) {
     return productsById[id];
+}
+function getProductsByCategory(category) {
+    const lowerCaseCategory = category.toLowerCase();
+    return products.filter((product)=>product.category.toLowerCase() === lowerCaseCategory || product.categoryAr.toLowerCase() === lowerCaseCategory);
 }
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
