@@ -238,10 +238,12 @@
     --color-red-400: #ff6568;
     --color-red-500: #fb2c36;
     --color-red-600: #e40014;
+    --color-green-100: #dcfce7;
     --color-black: #000;
     --color-white: #fff;
     --spacing: .25rem;
     --container-sm: 24rem;
+    --container-md: 28rem;
     --container-lg: 32rem;
     --text-xs: .75rem;
     --text-xs--line-height: calc(1 / .75);
@@ -294,6 +296,7 @@
       --color-red-400: lab(63.7053% 60.7449 31.3109);
       --color-red-500: lab(55.4814% 75.0732 48.8528);
       --color-red-600: lab(48.4493% 77.4328 61.5452);
+      --color-green-100: lab(96.186% -13.8464 6.52362);
     }
   }
 }
@@ -623,6 +626,14 @@
     inset-block: calc(var(--spacing) * 0);
   }
 
+  .-top-0\.5 {
+    top: calc(var(--spacing) * -.5);
+  }
+
+  .-top-1 {
+    top: calc(var(--spacing) * -1);
+  }
+
   .-top-12 {
     top: calc(var(--spacing) * -12);
   }
@@ -669,6 +680,14 @@
 
   .top-full {
     top: 100%;
+  }
+
+  .-right-0\.5 {
+    right: calc(var(--spacing) * -.5);
+  }
+
+  .-right-1\.5 {
+    right: calc(var(--spacing) * -1.5);
   }
 
   .-right-12 {
@@ -783,6 +802,10 @@
     margin-inline: calc(var(--spacing) * -1);
   }
 
+  .-mx-3 {
+    margin-inline: calc(var(--spacing) * -3);
+  }
+
   .-mx-4 {
     margin-inline: calc(var(--spacing) * -4);
   }
@@ -877,10 +900,6 @@
 
   .mb-16 {
     margin-bottom: calc(var(--spacing) * 16);
-  }
-
-  .-ml-2 {
-    margin-left: calc(var(--spacing) * -2);
   }
 
   .-ml-4 {
@@ -1274,6 +1293,10 @@
     width: 280px;
   }
 
+  .w-\[400px\] {
+    width: 400px;
+  }
+
   .w-auto {
     width: auto;
   }
@@ -1308,6 +1331,10 @@
 
   .max-w-max {
     max-width: max-content;
+  }
+
+  .max-w-md {
+    max-width: var(--container-md);
   }
 
   .max-w-sm {
@@ -1700,6 +1727,10 @@
     border-radius: var(--radius-2xl);
   }
 
+  .rounded-3xl {
+    border-radius: var(--radius-3xl);
+  }
+
   .rounded-\[2px\] {
     border-radius: 2px;
   }
@@ -1942,6 +1973,10 @@
     background-color: var(--foreground);
   }
 
+  .bg-green-100 {
+    background-color: var(--color-green-100);
+  }
+
   .bg-input {
     background-color: var(--input);
   }
@@ -1976,6 +2011,10 @@
     .bg-primary\/20 {
       background-color: color-mix(in oklab, var(--primary) 20%, transparent);
     }
+  }
+
+  .bg-red-500 {
+    background-color: var(--color-red-500);
   }
 
   .bg-secondary {
@@ -2104,6 +2143,10 @@
 
   .p-6 {
     padding: calc(var(--spacing) * 6);
+  }
+
+  .p-8 {
+    padding: calc(var(--spacing) * 8);
   }
 
   .p-\[3px\] {
@@ -2317,6 +2360,11 @@
     line-height: var(--tw-leading, var(--text-4xl--line-height));
   }
 
+  .text-5xl {
+    font-size: var(--text-5xl);
+    line-height: var(--tw-leading, var(--text-5xl--line-height));
+  }
+
   .text-base {
     font-size: var(--text-base);
     line-height: var(--tw-leading, var(--text-base--line-height));
@@ -2349,6 +2397,10 @@
 
   .text-\[0\.8rem\] {
     font-size: .8rem;
+  }
+
+  .text-\[10px\] {
+    font-size: 10px;
   }
 
   .leading-none {
@@ -2540,6 +2592,10 @@
   .tabular-nums {
     --tw-numeric-spacing: tabular-nums;
     font-variant-numeric: var(--tw-ordinal, ) var(--tw-slashed-zero, ) var(--tw-numeric-figure, ) var(--tw-numeric-spacing, ) var(--tw-numeric-fraction, );
+  }
+
+  .no-underline {
+    text-decoration-line: none;
   }
 
   .underline-offset-4 {
@@ -3299,6 +3355,12 @@
   @media (hover: hover) {
     .hover\:text-\[\#6B6561\]:hover {
       color: #6b6561;
+    }
+  }
+
+  @media (hover: hover) {
+    .hover\:text-\[\#C9B59C\]:hover {
+      color: #c9b59c;
     }
   }
 
@@ -4673,6 +4735,18 @@
   }
 
   @media (min-width: 48rem) {
+    .md\:hidden {
+      display: none;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .md\:w-\[500px\] {
+      width: 500px;
+    }
+  }
+
+  @media (min-width: 48rem) {
     .md\:w-\[var\(--radix-navigation-menu-viewport-width\)\] {
       width: var(--radix-navigation-menu-viewport-width);
     }
@@ -4687,6 +4761,12 @@
   @media (min-width: 48rem) {
     .md\:max-w-\[420px\] {
       max-width: 420px;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .md\:grid-cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
@@ -4781,6 +4861,12 @@
     .md\:after\:hidden:after {
       content: var(--tw-content);
       display: none;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .lg\:w-\[600px\] {
+      width: 600px;
     }
   }
 
