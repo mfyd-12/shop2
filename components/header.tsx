@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import Link from 'next/link'
-import { ShoppingBag, Menu, X, Search, User } from 'lucide-react'
+import { ShoppingBag, Menu, X, Search, User, Package } from 'lucide-react'
 import { useState } from 'react'
 import { useStore } from '@/lib/store-context'
 import { useLanguage } from '@/lib/language-context'
@@ -128,11 +128,8 @@ export function Header() {
               <Menu className="w-6 h-6 text-[#2A2723]" />
             </button>
             <div className="hidden md:flex items-center gap-2">
-              <Link href="/products" className="p-2 hover:bg-[#EFE9E3] rounded-lg transition-colors" aria-label="Shop">
-                <Search className="w-6 h-6 text-[#2A2723]" />
-              </Link>
-              <Link href="/orders" className="p-2 hover:bg-[#EFE9E3] rounded-lg transition-colors" aria-label="Orders">
-                <ShoppingBag className="w-6 h-6 text-[#2A2723]" />
+              <Link href="/orders" className="p-2 hover:bg-[#EFE9E3] rounded-lg transition-colors" aria-label="My Orders">
+                <Package className="w-6 h-6 text-[#2A2723]" />
               </Link>
               <Link href="/account" className="p-2 hover:bg-[#EFE9E3] rounded-lg transition-colors" aria-label="Account">
                 <User className="w-6 h-6 text-[#2A2723]" />
@@ -140,15 +137,7 @@ export function Header() {
             </div>
           </div>
         </div>
-        {isMobile && (
-          <div className="p-2 border-b border-[#D9CFC7]">
-            <Link href="/orders" className="block w-full">
-              <button className="w-full bg-[#EFE9E3] rounded-lg p-2 text-center font-medium text-[#2A2723] hover:bg-[#D9CFC7] transition-colors">
-                {t('myOrders')}
-              </button>
-            </Link>
-          </div>
-        )}
+
       </header>
 
 
