@@ -22,6 +22,8 @@ const translations = {
     shirts: 'Shirts',
     pants: 'Trousers',
     jackets: 'Jackets',
+    hoodies: 'Hoodies',
+    shoes: 'Shoes',
     accessories: 'Accessories',
     
     // Home Page
@@ -150,6 +152,8 @@ const translations = {
     shirts: 'القمصان',
     pants: 'السراويل',
     jackets: 'الجاكيتات',
+    hoodies: 'الكنزات الثقيلة',
+    shoes: 'الأحذية',
     accessories: 'الإكسسوارات',
     
     // Home Page

@@ -237,6 +237,8 @@ const translations = {
         shirts: 'Shirts',
         pants: 'Trousers',
         jackets: 'Jackets',
+        hoodies: 'Hoodies',
+        shoes: 'Shoes',
         accessories: 'Accessories',
         // Home Page
         heroTitle: 'Timeless Elegance, Modern Comfort',
@@ -353,6 +355,8 @@ const translations = {
         shirts: 'القمصان',
         pants: 'السراويل',
         jackets: 'الجاكيتات',
+        hoodies: 'الكنزات الثقيلة',
+        shoes: 'الأحذية',
         accessories: 'الإكسسوارات',
         // Home Page
         heroTitle: 'أناقة خالدة، راحة عصرية',
@@ -496,7 +500,7 @@ function LanguageProvider({ children }) {
         children: children
     }, void 0, false, {
         fileName: "[project]/lib/language-context.tsx",
-        lineNumber: 299,
+        lineNumber: 303,
         columnNumber: 5
     }, this);
 }

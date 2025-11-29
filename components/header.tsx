@@ -57,6 +57,8 @@ export function Header() {
     { name: t('shirts'), href: '/products?category=shirts' },
     { name: t('pants'), href: '/products?category=pants' },
     { name: t('jackets'), href: '/products?category=jackets' },
+    { name: t('hoodies'), href: '/products?category=hoodies' },
+    { name: t('shoes'), href: '/products?category=shoes' },
     { name: t('accessories'), href: '/products?category=accessories' },
   ]
 
