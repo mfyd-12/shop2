@@ -13,9 +13,16 @@ import { useLanguage } from '@/lib/language-context'
 import { products } from '@/lib/data/products'
 import { CategoryFilter } from '@/components/category-filter'
 
-export default function ProductsPage() {
+export default function ProductsPage({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined }
+}) {
   const { addToCart, toggleFavorite, isFavorite } = useStore()
-  const [selectedCategory, setSelectedCategory] = useState('All')
+  const initialCategory = typeof searchParams?.category === 'string'
+    ? searchParams.category
+    : 'All';
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory)
   const { toast } = useToast()
   const { t, language } = useLanguage()
 

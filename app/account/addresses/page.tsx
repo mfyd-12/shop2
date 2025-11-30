@@ -18,6 +18,7 @@ interface Address {
   city: string;
   postalCode: string;
   country: string;
+  phoneNumber: string;
 }
 
 const LOCAL_STORAGE_KEY = 'user_addresses';
@@ -32,6 +33,7 @@ export default function AddressesPage() {
     city: '',
     postalCode: '',
     country: '',
+    phoneNumber: '',
   });
   const [editingId, setEditingId] = useState<string | null>(null);
 
@@ -59,8 +61,8 @@ export default function AddressesPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!currentAddress.fullName || !currentAddress.streetAddress || !currentAddress.city || !currentAddress.postalCode || !currentAddress.country) {
-      alert(t('fill_all_fields')); // Placeholder for a proper toast/notification
+    if (!currentAddress.fullName || !currentAddress.phoneNumber || !currentAddress.streetAddress || !currentAddress.city || !currentAddress.postalCode || !currentAddress.country) {
+      alert(t('fill_all_fields')); // Reverted to snake_case
       return;
     }
 
@@ -79,6 +81,7 @@ export default function AddressesPage() {
       city: '',
       postalCode: '',
       country: '',
+      phoneNumber: '',
     });
   };
 
@@ -88,7 +91,7 @@ export default function AddressesPage() {
   };
 
   const handleDelete = (id: string) => {
-    if (confirm(t('confirm_delete_address'))) { // Placeholder for a proper confirmation dialog
+    if (confirm(t('confirm_delete_address'))) { // Reverted to snake_case
       setAddresses((prev) => prev.filter((addr) => addr.id !== id));
     }
   };
@@ -122,6 +125,16 @@ export default function AddressesPage() {
                   placeholder={t('full_name_placeholder')}
                   value={currentAddress.fullName}
                   onChange={handleChange}
+                />
+              </div>
+              <div>
+                <Label htmlFor="phoneNumber">{t('phoneNumber')}</Label>
+                <Input
+                  id="phoneNumber"
+                  placeholder={t('phoneNumberPlaceholder')}
+                  value={currentAddress.phoneNumber}
+                  onChange={handleChange}
+                  type="tel"
                 />
               </div>
               <div>
@@ -166,7 +179,7 @@ export default function AddressesPage() {
               {editingId && (
                 <Button variant="outline" onClick={() => {
                   setEditingId(null);
-                  setCurrentAddress({ id: '', fullName: '', streetAddress: '', city: '', postalCode: '', country: '' });
+                  setCurrentAddress({ id: '', fullName: '', phoneNumber: '', streetAddress: '', city: '', postalCode: '', country: '' });
                 }} className="w-full mt-2">
                   {t('cancel_edit')}
                 </Button>
@@ -194,6 +207,7 @@ export default function AddressesPage() {
                       </Button>
                     </div>
                   </div>
+                  <p className="text-sm text-[#6B6561]">{addr.phoneNumber}</p>
                   <p className="text-sm text-[#6B6561]">{addr.streetAddress}</p>
                   <p className="text-sm text-[#6B6561]">{`${addr.city}, ${addr.postalCode}`}</p>
                   <p className="text-sm text-[#6B6561]">{addr.country}</p>

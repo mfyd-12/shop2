@@ -22,6 +22,7 @@ interface Address {
   city: string;
   postalCode: string;
   country: string;
+  phoneNumber: string; // Add phoneNumber to the interface
 }
 
 const LOCAL_STORAGE_KEY = 'user_addresses';
@@ -78,6 +79,7 @@ export default function CartPage() {
       setOrderForm(prev => ({
         ...prev,
         fullName: '',
+        phone: '', // Clear phone for new address
         address: '',
         city: '',
       }));
@@ -87,9 +89,9 @@ export default function CartPage() {
         setOrderForm(prev => ({
           ...prev,
           fullName: address.fullName,
+          phone: address.phoneNumber, // Populate phone number
           address: address.streetAddress, // Map streetAddress to address
           city: address.city,
-          // Phone is not stored with address, so it remains as is or cleared if desired
         }));
       }
     }

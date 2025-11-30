@@ -4,6 +4,7 @@ import * as React from 'react'
 import Link from 'next/link'
 import { ShoppingBag, Menu, X, Search, User, Package } from 'lucide-react'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation' // Add this import
 import { useStore } from '@/lib/store-context'
 import { useLanguage } from '@/lib/language-context'
 import { useIsMobile } from '@/hooks/use-mobile'
@@ -19,26 +20,25 @@ import {
 } from "@/components/ui/navigation-menu"
 
 const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
+  HTMLDivElement, // Ref type for a div element
+  React.ComponentPropsWithoutRef<"div"> & { href: string; onClick: (href: string) => void }
+>(({ className, title, children, href, onClick, ...props }, ref) => {
   return (
     <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
+      <div
+        ref={ref}
+        onClick={() => onClick(href)} // Use the passed onClick handler
+        className={cn(
+          "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground cursor-pointer", // Added cursor-pointer
+          className
+        )}
+        {...props}
+      >
+        <div className="text-sm font-medium leading-none">{title}</div>
+        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+          {children}
+        </p>
+      </div>
     </li>
   )
 })
@@ -51,6 +51,7 @@ export function Header() {
   const { cartCount } = useStore()
   const { language, toggleLanguage, t } = useLanguage()
   const isMobile = useIsMobile()
+  const router = useRouter() // Initialize useRouter here
 
   const categories = [
     { name: t('allProducts'), href: '/products' },
@@ -61,6 +62,7 @@ export function Header() {
     { name: t('shoes'), href: '/products?category=shoes' },
     { name: t('accessories'), href: '/products?category=accessories' },
   ]
+
 
 
 
@@ -85,6 +87,11 @@ export function Header() {
                           key={component.name}
                           title={component.name}
                           href={component.href}
+                          onClick={(href) => {
+                            router.push(href as string)
+                            // Optionally close the navigation menu here if needed,
+                            // but NavigationMenuLink typically handles this.
+                          }}
                         >
                           {/* You can add a description for each category here */}
                         </ListItem>
@@ -169,13 +176,15 @@ export function Header() {
               <ul className="space-y-2">
                 {categories.map((category) => (
                   <li key={category.name}>
-                    <Link
-                      href={category.href}
-                      onClick={() => setIsMenuOpen(false)}
-                      className="block px-4 py-3 rounded-xl text-[#2A2723] font-medium hover:bg-[#EFE9E3] transition-colors"
+                    <button
+                      onClick={() => {
+                        router.push(category.href)
+                        setIsMenuOpen(false)
+                      }}
+                      className="block px-4 py-3 rounded-xl text-[#2A2723] font-medium hover:bg-[#EFE9E3] transition-colors w-full text-left"
                     >
                       {category.name}
-                    </Link>
+                    </button>
                   </li>
                 ))}
               </ul>

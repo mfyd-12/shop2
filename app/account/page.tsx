@@ -8,9 +8,32 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { User, ChevronRight, ShoppingBag, Heart, MapPin, CreditCard, Settings, HelpCircle } from 'lucide-react'
 import { useLanguage } from '@/lib/language-context'
+import React, { useState, useEffect } from 'react' // Import useState and useEffect
+
+const LOCAL_STORAGE_PROFILE_KEY = 'user_profile';
+
+interface UserProfile {
+  name: string;
+  email: string;
+  profileImage: string; // Base64 string or URL
+}
 
 export default function AccountPage() {
   const { t } = useLanguage()
+  const [userProfile, setUserProfile] = useState<UserProfile>({
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+    profileImage: '/placeholder-user.jpg',
+  });
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedProfile = localStorage.getItem(LOCAL_STORAGE_PROFILE_KEY);
+      if (storedProfile) {
+        setUserProfile(JSON.parse(storedProfile));
+      }
+    }
+  }, []);
 
   const accountSections = [
     {
@@ -41,14 +64,14 @@ export default function AccountPage() {
       <section className="px-4 py-8">
         <div className="flex items-center gap-4 mb-8">
           <Avatar className="w-16 h-16">
-            <AvatarImage src="/placeholder-user.jpg" />
+            <AvatarImage src={userProfile.profileImage} alt={userProfile.name} />
             <AvatarFallback>
               <User className="w-8 h-8" />
             </AvatarFallback>
           </Avatar>
           <div>
-            <h1 className="text-2xl font-bold text-[#2A2723]">John Doe</h1>
-            <p className="text-sm text-[#6B6561]">john.doe@example.com</p>
+            <h1 className="text-2xl font-bold text-[#2A2723]">{userProfile.name}</h1>
+            <p className="text-sm text-[#6B6561]">{userProfile.email}</p>
           </div>
         </div>
 
