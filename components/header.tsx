@@ -54,7 +54,6 @@ export function Header() {
   const router = useRouter() // Initialize useRouter here
 
   const categories = [
-    { name: t('allProducts'), href: '/products' },
     { name: t('shirts'), href: '/products?category=shirts' },
     { name: t('pants'), href: '/products?category=pants' },
     { name: t('jackets'), href: '/products?category=jackets' },
@@ -72,35 +71,15 @@ export function Header() {
         <div className="flex items-center justify-between h-16 px-4">
           <div className="flex items-center gap-4">
             <Link href="/" className="flex items-center">
-              <h1 className="text-2xl font-serif font-bold tracking-tight text-[#2A2723]">
-                REEVE
-              </h1>
+             <img src="logo.png" alt="logo" className="w-24 h-10"/>
             </Link>
-            <NavigationMenu className="hidden md:flex">
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger>{t('categories')}</NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                      {categories.map((component) => (
-                        <ListItem
-                          key={component.name}
-                          title={component.name}
-                          href={component.href}
-                          onClick={(href) => {
-                            router.push(href as string)
-                            // Optionally close the navigation menu here if needed,
-                            // but NavigationMenuLink typically handles this.
-                          }}
-                        >
-                          {/* You can add a description for each category here */}
-                        </ListItem>
-                      ))}
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
+           <div className="flex items-center gap-2">
+           {categories.map((category) => (
+            <Link href={category.href} key={category.name} className="text-sm font-medium text-[#2A2723] hover:text-[#575757]">
+              {category.name}
+            </Link>
+           ))}
+           </div>
           </div>
           
           <div className="flex items-center gap-2">

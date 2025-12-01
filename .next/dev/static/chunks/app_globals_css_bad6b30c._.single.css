@@ -1103,6 +1103,10 @@
     width: calc(var(--spacing) * 9);
   }
 
+  .w-10 {
+    width: calc(var(--spacing) * 10);
+  }
+
   .w-12 {
     width: calc(var(--spacing) * 12);
   }
@@ -1129,6 +1133,10 @@
 
   .w-72 {
     width: calc(var(--spacing) * 72);
+  }
+
+  .w-100 {
+    width: calc(var(--spacing) * 100);
   }
 
   .w-\[100px\] {
@@ -3205,8 +3213,20 @@
   }
 
   @media (hover: hover) {
+    .hover\:text-\[\#3A3733\]:hover {
+      color: #3a3733;
+    }
+  }
+
+  @media (hover: hover) {
     .hover\:text-\[\#6B6561\]:hover {
       color: #6b6561;
+    }
+  }
+
+  @media (hover: hover) {
+    .hover\:text-\[\#575757\]:hover {
+      color: #575757;
     }
   }
 
