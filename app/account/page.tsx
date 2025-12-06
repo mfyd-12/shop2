@@ -58,7 +58,7 @@ export default function AccountPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-[#F9F8F6] pb-20">
+    <div className="min-h-screen bg-background text-foreground pb-20">
       <Header />
 
       <section className="px-4 py-8">
@@ -70,16 +70,16 @@ export default function AccountPage() {
             </AvatarFallback>
           </Avatar>
           <div>
-            <h1 className="text-2xl font-bold text-[#2A2723]">{userProfile.name}</h1>
-            <p className="text-sm text-[#6B6561]">{userProfile.email}</p>
+            <h1 className="text-2xl font-bold text-foreground">{userProfile.name}</h1>
+            <p className="text-sm text-muted-foreground">{userProfile.email}</p>
           </div>
         </div>
 
         <div className="space-y-6">
           {accountSections.map((section) => (
-            <Card key={section.title} className="bg-white rounded-2xl shadow-sm">
+            <Card key={section.title} className="bg-card rounded-2xl shadow-sm">
               <CardHeader>
-                <CardTitle className="text-lg font-semibold text-[#2A2723]">{section.title}</CardTitle>
+                <CardTitle className="text-lg font-semibold text-foreground">{section.title}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
@@ -87,12 +87,12 @@ export default function AccountPage() {
                     const Icon = item.icon
                     return (
                       <Link href={item.href} key={item.label}>
-                        <div className="flex items-center justify-between p-3 -mx-3 rounded-lg hover:bg-[#EFE9E3] transition-colors">
+                        <div className="flex items-center justify-between p-3 -mx-3 rounded-lg hover:bg-muted transition-colors">
                           <div className="flex items-center gap-4">
-                            <Icon className="w-5 h-5 text-[#6B6561]" />
-                            <span className="font-medium text-[#2A2723]">{item.label}</span>
+                            <Icon className="w-5 h-5 text-muted-foreground" />
+                            <span className="font-medium text-foreground">{item.label}</span>
                           </div>
-                          <ChevronRight className="w-5 h-5 text-[#6B6561]" />
+                          <ChevronRight className="w-5 h-5 text-muted-foreground" />
                         </div>
                       </Link>
                     )

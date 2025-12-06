@@ -2,9 +2,11 @@ import type { Metadata } from 'next'
 import { Playfair_Display, Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
+import 'antd/dist/reset.css';
 import { StoreProvider } from '@/lib/store-context'
 import { LanguageProvider } from '@/lib/language-context'
 import { Toaster } from '@/components/ui/toaster'
+import { ThemeProvider } from '@/components/theme-provider'
 
 const playfair = Playfair_Display({ 
   subsets: ["latin"],
@@ -47,14 +49,20 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="ar" dir="rtl">
+    <html lang="ar" dir="rtl" suppressHydrationWarning>
       <body className={`${inter.variable} ${playfair.variable} font-sans antialiased`}>
-        <LanguageProvider>
-          <StoreProvider>
-            {children}
-          </StoreProvider>
-          <Toaster />
-        </LanguageProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+        >
+          <LanguageProvider>
+            <StoreProvider>
+              {children}
+            </StoreProvider>
+            <Toaster />
+          </LanguageProvider>
+        </ThemeProvider>
         <Analytics />
       </body>
     </html>

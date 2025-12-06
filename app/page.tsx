@@ -22,28 +22,28 @@ export default function HomePage() {
   const featured = products.slice(0, 3)
 
   return (
-    <div className="min-h-screen bg-[#F9F8F6] pb-20">
+    <div className="min-h-screen bg-background text-foreground pb-20">
       <Header />
       
       {/* Hero Section */}
-      <section className="relative h-[70vh] bg-[#EFE9E3] overflow-hidden">
+      <section className="relative h-[70vh] bg-muted overflow-hidden">
         <img 
           src="/stylish-man-minimal-fashion-portrait.jpg" 
           alt="Hero" 
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#2A2723]/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-6">
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-white mb-3 text-balance">
+          <h2 className="font-serif text-4xl md:text-5xl font-bold text-primary-foreground mb-3 text-balance">
             {t('heroTitle')}
           </h2>
-          <p className="text-white/90 text-lg mb-6 text-pretty">
+          <p className="text-primary-foreground/90 text-lg mb-6 text-pretty">
             {t('heroSubtitle')}
           </p>
           <Button 
             asChild
             size="lg"
-            className="bg-[#C9B59C] hover:bg-[#B8A58B] text-[#2A2723] font-medium rounded-full h-12 px-8"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-full h-12 px-8"
           >
             <Link href="/products">
               {t('shopNow')}
@@ -55,7 +55,7 @@ export default function HomePage() {
 
       {/* Categories Section */}
       <section className="px-4 py-12">
-        <h3 className="font-serif text-2xl font-bold text-[#2A2723] mb-6">
+        <h3 className="font-serif text-2xl font-bold text-foreground mb-6">
           {t('shopByCategory')}
         </h3>
         <div className="grid grid-cols-2 gap-4">
@@ -65,14 +65,14 @@ export default function HomePage() {
               href="/products"
               className="group"
             >
-              <div className="aspect-square bg-[#EFE9E3] rounded-2xl overflow-hidden mb-3">
+              <div className="aspect-square bg-muted rounded-2xl overflow-hidden mb-3">
                 <img 
                   src={category.image || "/placeholder.svg"} 
                   alt={category.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <h4 className="font-medium text-[#2A2723] text-center">
+              <h4 className="font-medium text-foreground text-center">
                 {category.name}
               </h4>
             </Link>
@@ -83,10 +83,10 @@ export default function HomePage() {
       {/* Featured Products */}
       <section className="px-4 pb-12">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="font-serif text-2xl font-bold text-[#2A2723]">
+          <h3 className="font-serif text-2xl font-bold text-foreground">
             {t('featuredItems')}
           </h3>
-          <Link href="/products" className="text-[#C9B59C] text-sm font-medium">
+          <Link href="/products" className="text-primary text-sm font-medium hover:text-primary/90">
             {t('viewAll')}
           </Link>
         </div>
@@ -95,7 +95,7 @@ export default function HomePage() {
             <Link 
               key={product.id}
               href={`/products/${product.id}`}
-              className="flex gap-4 bg-[#EFE9E3] rounded-2xl overflow-hidden group"
+              className="flex gap-4 bg-card rounded-2xl overflow-hidden group"
             >
               <div className="w-32 h-32 flex-shrink-0">
                 <img 
@@ -105,13 +105,13 @@ export default function HomePage() {
                 />
               </div>
               <div className="flex flex-col justify-center py-4 pr-4">
-                <h4 className="font-medium text-[#2A2723] mb-1">
+                <h4 className="font-medium text-foreground mb-1">
                   {language === 'ar' ? product.nameAr : product.name}
                 </h4>
-                <p className="text-[#6B6561] text-sm mb-2">{t('premiumQuality')}</p>
+                <p className="text-muted-foreground text-sm mb-2">{t('premiumQuality')}</p>
                 <Currency
                   value={product.price}
-                  className="font-serif text-lg font-semibold text-[#2A2723]"
+                  className="font-serif text-lg font-semibold text-foreground"
                 />
               </div>
             </Link>

@@ -169,6 +169,16 @@ const translations = {
     paymentMethods: 'Payment Methods',
     activity: 'Activity',
     support: 'Support',
+
+    // Settings
+    language: 'Language',
+    theme: 'Theme',
+    light_mode: 'Light Mode',
+    dark_mode: 'Dark Mode',
+    notifications: 'Notifications',
+    privacy: 'Privacy',
+    help: 'Help',
+    about: 'About',
   },
   ar: {
     // Header
@@ -275,7 +285,7 @@ const translations = {
     favorites: 'المفضلة',
     myFavorites: 'مفضلتي',
     emptyFavorites: 'لا توجد مفضلة بعد',
-    addFavorites: 'ابدأ بإضافة المنتجات التي تحبها',
+addFavorites: 'ابدأ بإضافة المنتجات التي تحبها',
     noFavoritesYet: 'لا توجد مفضلة بعد',
     startAddingFavorites: 'ابدأ بإضافة المنتجات للمفضلة بالضغط على أيقونة القلب.',
     
@@ -328,6 +338,16 @@ const translations = {
     paymentMethods: 'طرق الدفع',
     activity: 'النشاط',
     support: 'الدعم',
+
+    // Settings
+    language: 'اللغة',
+    theme: 'المظهر',
+    light_mode: 'الوضع الفاتح',
+    dark_mode: 'الوضع الداكن',
+    notifications: 'الإشعارات',
+    privacy: 'الخصوصية',
+    help: 'المساعدة',
+    about: 'حول',
   }
 }
 

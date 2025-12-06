@@ -5,6 +5,7 @@ import { Home, ShoppingBag, User, Search, Package } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { useLanguage } from '@/lib/language-context'
 import { useStore } from '@/lib/store-context'
+import { ThemeToggleButton } from './theme-toggle-button'
 
 export function MobileNav() {
   const pathname = usePathname()
@@ -20,7 +21,7 @@ export function MobileNav() {
   ]
   
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-[#EFE9E3] border-t border-[#D9CFC7] z-50 md:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 bg-background border-t z-50 md:hidden">
       <div className="flex items-center justify-around h-16 px-4">
         {navItems.map((item) => {
           const Icon = item.icon
@@ -37,14 +38,15 @@ export function MobileNav() {
                 </div>
               )}
               <Icon 
-                className={`w-5 h-5 ${isActive ? 'text-[#2A2723]' : 'text-[#6B6561]'}`} 
+                className={`w-5 h-5 ${isActive ? 'text-foreground' : 'text-muted-foreground'}`} 
               />
-              <span className={`text-xs ${isActive ? 'text-[#2A2723] font-medium' : 'text-[#6B6561]'}`}>
+              <span className={`text-xs ${isActive ? 'text-foreground font-medium' : 'text-muted-foreground'}`}>
                 {t(item.label)}
               </span>
             </Link>
           )
         })}
+  
       </div>
     </nav>
   )

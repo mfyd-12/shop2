@@ -69,7 +69,7 @@ export default function ProfilePage() {
   const hasChanges = JSON.stringify(profile) !== JSON.stringify(initialProfile);
 
   return (
-    <div className="min-h-screen bg-[#F9F8F6] pb-20">
+    <div className="min-h-screen bg-background text-foreground pb-20">
       <Header />
 
       <section className="px-4 py-8">
@@ -79,12 +79,12 @@ export default function ProfilePage() {
               <ChevronLeft className="w-6 h-6" />
             </Button>
           </Link>
-          <h1 className="text-2xl font-bold text-[#2A2723]">{t('profile')}</h1>
+          <h1 className="text-2xl font-bold text-foreground">{t('profile')}</h1>
         </div>
 
-        <Card className="bg-white rounded-2xl shadow-sm mb-6">
+        <Card className="bg-card rounded-2xl shadow-sm mb-6">
           <CardHeader className="flex flex-col items-center">
-            <CardTitle className="text-lg font-semibold text-[#2A2723] mb-4">{t('editProfile')}</CardTitle>
+            <CardTitle className="text-lg font-semibold text-foreground mb-4">{t('editProfile')}</CardTitle>
             <div className="relative w-24 h-24 mb-4 group">
               <Avatar className="w-full h-full">
                 <AvatarImage src={profile.profileImage} alt={profile.name} />
@@ -125,7 +125,7 @@ export default function ProfilePage() {
                   onChange={handleChange}
                 />
               </div>
-              <Button type="submit" className="w-full bg-[#2A2723] text-white hover:bg-[#4A4A4A]" disabled={!hasChanges}>
+              <Button type="submit" className="w-full bg-foreground text-background hover:bg-foreground/90" disabled={!hasChanges}>
                 {t('saveChanges')}
               </Button>
             </form>

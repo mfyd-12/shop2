@@ -68,21 +68,21 @@ export default function ProductsPage({
   }
 
   return (
-    <div className="min-h-screen bg-[#F9F8F6] pb-20">
+    <div className="min-h-screen bg-background text-foreground pb-20">
       <Header />
       
       {/* Page Title */}
-      <section className="px-4 py-8 border-b border-[#D9CFC7]">
-        <h1 className="font-serif text-3xl font-bold text-[#2A2723] mb-2">
+      <section className="px-4 py-8 border-b border-border">
+        <h1 className="font-serif text-3xl font-bold text-foreground mb-2">
           {t('allProducts')}
         </h1>
-        <p className="text-[#6B6561]">
+        <p className="text-muted-foreground">
           {filteredProducts.length} {language === 'ar' ? 'منتج' : 'items'}
         </p>
       </section>
 
       {/* Filters */}
-      <section className="px-4 py-4 border-b border-[#D9CFC7]">
+      <section className="px-4 py-4 border-b border-border">
         <CategoryFilter
           products={products}
           onSelectCategory={setSelectedCategory}
@@ -96,7 +96,7 @@ export default function ProductsPage({
           {filteredProducts.map((product) => (
             <div key={product.id} className="group">
               <Link href={`/products/${product.id}`}>
-                <div className="aspect-[3/4] bg-[#EFE9E3] rounded-2xl overflow-hidden mb-3 relative">
+                <div className="aspect-[3/4] bg-muted rounded-2xl overflow-hidden mb-3 relative">
                   <img 
                     src={product.image || "/placeholder.svg"} 
                     alt={language === 'ar' ? product.nameAr : product.name}
@@ -104,33 +104,33 @@ export default function ProductsPage({
                   />
                   <button
                     onClick={(e) => handleToggleFavorite(e, product)}
-                    className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-all active:scale-95"
+                    className="absolute top-3 right-3 w-9 h-9 rounded-full bg-background/90 backdrop-blur-sm flex items-center justify-center hover:bg-background transition-all active:scale-95"
                   >
                     <Heart 
                       className={`w-5 h-5 transition-colors ${
                         isFavorite(product.id) 
                           ? 'fill-red-500 stroke-red-500' 
-                          : 'stroke-[#2A2723]'
+                          : 'stroke-foreground'
                       }`}
                     />
                   </button>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-xs text-[#6B6561] uppercase tracking-wide">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide">
                     {language === 'ar' ? product.categoryAr : product.category}
                   </p>
-                  <h3 className="font-medium text-[#2A2723] text-sm leading-tight">
+                  <h3 className="font-medium text-foreground text-sm leading-tight">
                     {language === 'ar' ? product.nameAr : product.name}
                   </h3>
                   <Currency
                     value={product.price}
-                    className="font-serif text-lg font-semibold text-[#2A2723]"
+                    className="font-serif text-lg font-semibold text-foreground"
                   />
                 </div>
               </Link>
               <Button 
                 onClick={() => handleAddToCart(product)}
-                className="w-full mt-3 bg-[#C9B59C] hover:bg-[#B8A58B] text-[#2A2723] font-medium rounded-full h-10 transition-all active:scale-95"
+                className="w-full mt-3 bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-full h-10 transition-all active:scale-95"
               >
                 {t('addToCart')}
               </Button>

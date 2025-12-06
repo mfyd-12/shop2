@@ -15,6 +15,8 @@ __turbopack_context__.n(__turbopack_context__.i("[project]/app/layout.tsx [app-r
 __turbopack_context__.s([
     "getProductById",
     ()=>getProductById,
+    "getProductsByCategory",
+    ()=>getProductsByCategory,
     "products",
     ()=>products,
     "productsById",
@@ -463,6 +465,10 @@ const productsById = products.reduce((acc, product)=>{
 }, {});
 function getProductById(id) {
     return productsById[id];
+}
+function getProductsByCategory(category) {
+    const lowerCaseCategory = category.toLowerCase();
+    return products.filter((product)=>product.category.toLowerCase() === lowerCaseCategory || product.categoryAr.toLowerCase() === lowerCaseCategory);
 }
 }),
 "[project]/app/products/[id]/product-detail-view.tsx [app-rsc] (client reference proxy) <module evaluation>", ((__turbopack_context__) => {
